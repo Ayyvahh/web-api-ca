@@ -5,74 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3333825c-b846-4fab-88c1-c7947285615a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/package-lock.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/public/background.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/public/favicon.ico" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/public/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/public/logo192.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/public/logo512.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/public/manifest.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/public/robots.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/api/tmdb-api.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/components/actorCard/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/components/actorDetails/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/components/actorList/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/components/actorListCard/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/components/actorMovieCard/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/components/actorMoviesList/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/components/actorPageHeader/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/components/cardIcons/addToFavorites.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/components/cardIcons/addToFavouriteActors.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/components/cardIcons/addToMustWatch.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/components/cardIcons/removeFromFavoriteActors.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/components/cardIcons/removeFromFavorites.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/components/cardIcons/writeReview.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/components/filterActorsCard/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/components/filterMoviesCard/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/components/headerMovie/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/components/headerMovieList/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/components/movieActorList/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/components/movieCard/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/components/movieDetails/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/components/movieList/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/components/movieReview/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/components/movieReviews/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/components/reviewForm/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/components/siteHeader/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/components/spinner/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/components/templateActorListPage/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/components/templateActorPage/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/components/templateHomeMovieListPage/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/components/templateMovieList/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/components/templateMoviePage/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/contexts/actorsContext.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/contexts/authProvider.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/contexts/moviesContext.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/hooks/useMovie.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/images/actor-placeholder.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/images/film-poster-placeholder.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/images/headerLogo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/images/pexels-dziana-hasanbekava-5480827.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/images/popcorn.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/pages/MustWatchPage.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/pages/actorDetailsPage.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/pages/actorListPage.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/pages/addMovieReviewPage.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/pages/favoriteActorsPage.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/pages/favoriteMoviesPage.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/pages/homePage.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/pages/movieDetailsPage.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/pages/movieReviewPage.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/pages/nowShowingPage.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/pages/upcomingMoviesPage.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/services/firebase.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/react-movies/movies/src/util.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,27 +15,27 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 2
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
   <component name="ProjectId" id="2rH3wzSZXTTFZUzT3DJpxFTGucJ" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/webAppCa",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/webAppCa/movie-api&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\webAppCa\movie-api" />
@@ -129,7 +62,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1736202415707</updated>
-      <workItem from="1736202416995" duration="1683000" />
+      <workItem from="1736202416995" duration="2737000" />
     </task>
     <servers />
   </component>

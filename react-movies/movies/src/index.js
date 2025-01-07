@@ -18,7 +18,6 @@ import MustWatchPage from "./pages/MustWatchPage";
 import NowShowingMovies from "./pages/nowShowingPage";
 import ActorListPage from "./pages/actorListPage";
 import ActorPage from "./pages/actorDetailsPage";
-import {AuthProvider} from "./contexts/authProvider";
 import FavoriteActorsPage from "./pages/favoriteActorsPage";
 
 const queryClient = new QueryClient({
@@ -51,7 +50,7 @@ const App = () => {
         <ThemeProvider theme={darkTheme}>
             <CssBaseline />
         <QueryClientProvider client={queryClient}>
-            <AuthProvider>
+            <>
             <BrowserRouter>
                 <SiteHeader />
                 <MoviesContextProvider>
@@ -74,7 +73,7 @@ const App = () => {
                     </ActorsContextProvider>
                 </MoviesContextProvider>
             </BrowserRouter>
-            </AuthProvider>
+            </>
             <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
         </ThemeProvider>
