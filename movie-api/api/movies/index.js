@@ -11,17 +11,15 @@ import {
 const router = express.Router();
 
 router.get('/', asyncHandler(async (req, res) => {
-    let { page = 1, limit = 10 } = req.query; // destructure page and limit and set default values
-    [page, limit] = [+page, +limit]; //trick to convert to numeric (req.query will contain string values)
+    let { page = 1, limit = 10 } = req.query;
+    [page, limit] = [+page, +limit];
 
-    // Parallel execution of counting movies and getting movies using movieModel
     const [total_results, results] = await Promise.all([
         movieModel.estimatedDocumentCount(),
         movieModel.find().limit(limit).skip((page - 1) * limit)
     ]);
-    const total_pages = Math.ceil(total_results / limit); //Calculate total number of pages (= total No Docs/Number of docs per page)
+    const total_pages = Math.ceil(total_results / limit);
 
-    //construct return Object and insert into response object
     const returnObject = {
         page,
         total_pages,
@@ -43,7 +41,7 @@ router.get('/:id', asyncHandler(async (req, res) => {
 }));
 
 
-router.get('/tmdb/upcoming', asyncHandler(async (req, res) => {
+router.get('/upcoming', asyncHandler(async (req, res) => {
     const upcomingMovies = await getUpcomingMovies();
     res.status(200).json(upcomingMovies);
 }));

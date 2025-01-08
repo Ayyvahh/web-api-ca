@@ -18,8 +18,12 @@ import MustWatchPage from "./pages/MustWatchPage";
 import NowShowingMovies from "./pages/nowShowingPage";
 import ActorListPage from "./pages/actorListPage";
 import ActorPage from "./pages/actorDetailsPage";
-import {AuthProvider} from "./contexts/authProvider";
+import AuthContextProvider from "./contexts/authContext";
 import FavoriteActorsPage from "./pages/favoriteActorsPage";
+import LoginPage from "./pages/loginPage";
+import SignUpPage from "./pages/signUpPage";
+import ProtectedRoutes from "./protectedRoutes";
+
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -50,35 +54,37 @@ const App = () => {
     return (
         <ThemeProvider theme={darkTheme}>
             <CssBaseline />
-        <QueryClientProvider client={queryClient}>
-            <AuthProvider>
-            <BrowserRouter>
-                <SiteHeader />
-                <MoviesContextProvider>
-                    <ActorsContextProvider>
-                    <Routes>
-                        <Route path="/movies/upcoming" element={<UpcomingMoviesPage />} />
-                        <Route path="/movies/favorites" element={<FavoriteMoviesPage />} />
-                        <Route path="/movies/mustWatch" element={<MustWatchPage />} />
-                        <Route path="/movies/nowShowing" element={<NowShowingMovies/>}/>
-                        <Route path="/actors" element={<ActorListPage/>}/>
-                        <Route path="/actors/favorites" element={<FavoriteActorsPage/>}/>
-                        <Route path="/actors/:id" element={<ActorPage/>}/>
-                        <Route path="/reviews/:id" element={ <MovieReviewPage /> } />
-                        <Route path="/movies/:id" element={<MoviePage />} />
-                        <Route path="/" element={<HomePage />} />
-                        <Route path="*" element={ <Navigate to="/" /> } />
-                        <Route path="/reviews/form" element={ <AddMovieReviewPage /> } />
-
-                    </Routes>
-                    </ActorsContextProvider>
-                </MoviesContextProvider>
-            </BrowserRouter>
-            </AuthProvider>
-            <ReactQueryDevtools initialIsOpen={false} />
-        </QueryClientProvider>
+            <QueryClientProvider client={queryClient}>
+                <AuthContextProvider>
+                    <BrowserRouter>
+                        <SiteHeader />
+                        <MoviesContextProvider>
+                            <ActorsContextProvider>
+                                <Routes>
+                                    <Route path="/login" element={<LoginPage />} />
+                                    <Route path="/signup" element={<SignUpPage />} />
+                                    <Route path="/" element={<HomePage />} />
+                                    <Route path="*" element={<Navigate to="/" />} />
+                                    <Route element={<ProtectedRoutes />}>
+                                        <Route path="/movies/upcoming" element={<UpcomingMoviesPage />} />
+                                        <Route path="/movies/favorites" element={<FavoriteMoviesPage />} />
+                                        <Route path="/movies/mustWatch" element={<MustWatchPage />} />
+                                        <Route path="/movies/nowShowing" element={<NowShowingMovies />} />
+                                        <Route path="/actors" element={<ActorListPage />} />
+                                        <Route path="/actors/favorites" element={<FavoriteActorsPage />} />
+                                        <Route path="/actors/:id" element={<ActorPage />} />
+                                        <Route path="/reviews/:id" element={<MovieReviewPage />} />
+                                        <Route path="/movies/:id" element={<MoviePage />} />
+                                        <Route path="/reviews/form" element={<AddMovieReviewPage />} />
+                                    </Route>
+                                </Routes>
+                            </ActorsContextProvider>
+                        </MoviesContextProvider>
+                    </BrowserRouter>
+                </AuthContextProvider>
+                <ReactQueryDevtools initialIsOpen={false} />
+            </QueryClientProvider>
         </ThemeProvider>
-
     );
 };
 
