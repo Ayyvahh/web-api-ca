@@ -1,7 +1,9 @@
 import express from 'express';
 import User from './userModel';
-import asyncHandler from 'express-async-handler';
 import jwt from 'jsonwebtoken';
+import asyncHandler from "express-async-handler";
+
+
 
 const router = express.Router(); // eslint-disable-line
 
@@ -11,7 +13,6 @@ router.get('/', async (req, res) => {
     res.status(200).json(users);
 });
 
-//.... code as before
 
 // register(Create)/Authenticate User
 router.post('/', asyncHandler(async (req, res) => {
@@ -47,6 +48,20 @@ router.put('/:id', async (req, res) => {
     }
 });
 
+
+// Update a user
+router.put('/:id', async (req, res) => {
+    if (req.body._id) delete req.body._id;
+    const result = await User.updateOne({
+        _id: req.params.id,
+    }, req.body);
+    if (result.matchedCount) {
+        res.status(200).json({ code:200, msg: 'User Updated Sucessfully' });
+    } else {
+        res.status(404).json({ code: 404, msg: 'Unable to Update User' });
+    }
+});
+
 async function registerUser(req, res) {
     // Add input validation logic here
     await User.create(req.body);
@@ -67,6 +82,7 @@ async function authenticateUser(req, res) {
         res.status(401).json({ success: false, msg: 'Wrong password.' });
     }
 }
+
 
 
 

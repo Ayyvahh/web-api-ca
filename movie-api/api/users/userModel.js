@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 
+
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
@@ -8,9 +9,9 @@ const UserSchema = new Schema({
     password: {type: String, required: true }
 });
 
-UserSchema.methods.comparePassword = async function (passw) {
-    return await bcrypt.compare(passw, this.password);
-};
+UserSchema.methods.comparePassword = async function (pwd) {
+    return await bcrypt.compare(pwd, this.password);
+}
 
 UserSchema.statics.findByUserName = function (username) {
     return this.findOne({ username: username });
@@ -33,11 +34,15 @@ UserSchema.pre('save', async function(next) {
     }
 });
 
+
 const passwordValidator = (password) => {
-    const regexString = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
-    return regexString.test(password);
+    const pwdPattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+    return pwdPattern.test(password);
 };
 
-UserSchema.path("password").validate(passwordValidator);
+UserSchema.path("password").validate({
+    validator: passwordValidator,
+});
+
 
 export default mongoose.model('User', UserSchema);
