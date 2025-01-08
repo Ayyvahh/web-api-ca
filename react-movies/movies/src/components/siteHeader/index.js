@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { styled, useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import img from "../../images/headerLogo.png";
+import { AuthContext } from "../../contexts/authContext"; // Correct context import
 
 const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
 
@@ -56,19 +57,34 @@ const SiteHeader = () => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down("md"));
     const navigate = useNavigate();
+    const context = useContext(AuthContext);
 
     const menuOptions = [
         { label: "Discover Movies", path: "/" },
         { label: "Upcoming Movies", path: "/movies/upcoming" },
         { label: "Now in Cinemas", path: "/movies/nowShowing" },
-        { label: "Must Watch", path: "/movies/mustWatch" },
-        { label: "Favorite Movies", path: "/movies/favorites" },
+        { label: "Must Watch", path: "/movies/mustWatch", showWhenAuth: true },
+        { label: "Favorite Movies", path: "/movies/favorites", showWhenAuth: true },
         { label: "Actors", path: "/actors" },
-        { label: "Favorite Actors", path: "/actors/favorites" },
+        { label: "Favorite Actors", path: "/actors/favorites", showWhenAuth: true },
+        { label: "Log In", path: "/login", showWhenAuth: false },
+        { label: "Sign Up", path: "/signup", showWhenAuth: false },
+        { label: "Log Out", path: "/", action: () => context.signout(), showWhenAuth: true },
     ];
 
-    const handleMenuSelect = (pageURL) => {
-        navigate(pageURL, { replace: true });
+    const filteredMenuOptions = menuOptions.filter((opt) => {
+        // If `showWhenAuth` is true, show it only when authenticated
+        // If `showWhenAuth` is false, show it only when NOT authenticated
+        if (opt.showWhenAuth === undefined) return true; // Always show items without `showWhenAuth`
+        return opt.showWhenAuth === context.isAuthenticated;
+    });
+
+    const handleMenuSelect = (option) => {
+        if (option.action) {
+            option.action();
+        } else {
+            navigate(option.path, { replace: true });
+        }
     };
 
     const handleMenu = (event) => {
@@ -113,10 +129,10 @@ const SiteHeader = () => {
                                 open={open}
                                 onClose={() => setAnchorEl(null)}
                             >
-                                {menuOptions.map((opt) => (
+                                {filteredMenuOptions.map((opt) => (
                                     <MenuItem
                                         key={opt.label}
-                                        onClick={() => handleMenuSelect(opt.path)}
+                                        onClick={() => handleMenuSelect(opt)}
                                     >
                                         {opt.label}
                                     </MenuItem>
@@ -124,15 +140,17 @@ const SiteHeader = () => {
                             </Menu>
                         </>
                     ) : (
-                        menuOptions.map((opt) => (
-                            <StyledButton
-                                key={opt.label}
-                                color="inherit"
-                                onClick={() => handleMenuSelect(opt.path)}
-                            >
-                                {opt.label}
-                            </StyledButton>
-                        ))
+                        <>
+                            {filteredMenuOptions.map((opt) => (
+                                <StyledButton
+                                    key={opt.label}
+                                    color="inherit"
+                                    onClick={() => handleMenuSelect(opt)}
+                                >
+                                    {opt.label}
+                                </StyledButton>
+                            ))}
+                        </>
                     )}
                 </Toolbar>
             </StyledAppBar>
