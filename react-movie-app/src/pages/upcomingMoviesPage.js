@@ -9,7 +9,9 @@ import {Pagination} from "@mui/material";
 const UpcomingMoviesPage = (props) => {
     const [currPage, setCurrPage] = useState(1);
 
-    const {data, error, isLoading, isError} = useQuery(['upcoming', currPage], () => getUpcomingMovies(currPage))
+    const {  data, error, isLoading, isError }  = useQuery(['upcoming'], getUpcomingMovies);
+
+
 
     if (isLoading) {
         return <Spinner/>

@@ -63,10 +63,47 @@ router.put('/:id', async (req, res) => {
 });
 
 async function registerUser(req, res) {
-    // Add input validation logic here
-    await User.create(req.body);
-    res.status(201).json({ success: true, msg: 'User successfully created.' });
+    try {
+        const { username, password } = req.body;
+
+        if (!username || !password) {
+            return res.status(400).json({
+                success: false,
+                msg: 'Username and password are required.',
+            });
+        }
+
+        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+        if (!passwordRegex.test(password)) {
+            return res.status(400).json({
+                success: false,
+                msg: 'Password must be at least 8 characters long, include one letter, one number, and one special character.',
+            });
+        }
+
+        const existingUser = await User.findOne({ username });
+        if (existingUser) {
+            return res.status(409).json({
+                success: false,
+                msg: 'Username already exists. Please choose a different one.',
+            });
+        }
+
+         const newUser = await User.create({ username, password });
+
+        res.status(201).json({
+            success: true,
+            msg: 'User successfully created.',
+            user: { username: newUser.username },
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            msg: 'Internal server error. Please try again later.',
+        });
+    }
 }
+
 
 async function authenticateUser(req, res) {
     const user = await User.findByUserName(req.body.username);

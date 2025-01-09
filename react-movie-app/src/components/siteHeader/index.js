@@ -60,11 +60,13 @@ const SiteHeader = () => {
     const navigate = useNavigate();
 
     const menuOptions = [
-        { label: "Discover Movies", path: "/", showWhenAuth: null },
-        { label: "Upcoming Movies", path: "/react-movie-app/upcoming", showWhenAuth: null },
-        { label: "Now in Cinemas", path: "/react-movie-app/nowShowing", showWhenAuth: null },
-        { label: "Must Watch", path: "/react-movie-app/mustWatch", showWhenAuth: true },
-        { label: "Favorite Movies", path: "/react-movie-app/favorites", showWhenAuth: true },
+        { label: "Home", path: "/", showWhenAuth: null },
+        { label: "Upcoming", path: "/movies/upcoming", showWhenAuth: null },
+        { label: "Now Showing", path: "/movies/nowShowing", showWhenAuth: null },
+        { label: "Must Watch", path: "/movies/mustWatch", showWhenAuth: true },
+        { label: "Favorites", path: "/movies/favorites", showWhenAuth: true },
+        { label: "Actors", path: "/actors", showWhenAuth: null },
+        { label: "Favorite Actors", path: "/actors/favorites", showWhenAuth: true },
         { label: "Login", path: "/login", showWhenAuth: false },
         { label: "Sign Up", path: "/signup", showWhenAuth: false },
         { label: "Log Out", action: signout, showWhenAuth: true },

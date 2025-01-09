@@ -65,16 +65,16 @@ const App = () => {
                                     <Route path="/signup" element={<SignUpPage />} />
                                     <Route path="/" element={<HomePage />} />
                                     <Route path="*" element={<Navigate to="/" />} />
+                                    <Route path="/movies/upcoming" element={<UpcomingMoviesPage />} />
+                                    <Route path="/movies/nowShowing" element={<NowShowingMovies />} />
+                                    <Route path="/actors" element={<ActorListPage />} />
+                                    <Route path="/actors/:id" element={<ActorPage />} />
+                                    <Route path="/reviews/:id" element={<MovieReviewPage />} />
+                                    <Route path="/movies/:id" element={<MoviePage />} />
                                     <Route element={<ProtectedRoutes />}>
-                                        <Route path="/movies/upcoming" element={<UpcomingMoviesPage />} />
                                         <Route path="/movies/favorites" element={<FavoriteMoviesPage />} />
                                         <Route path="/movies/mustWatch" element={<MustWatchPage />} />
-                                        <Route path="/movies/nowShowing" element={<NowShowingMovies />} />
-                                        <Route path="/actors" element={<ActorListPage />} />
                                         <Route path="/actors/favorites" element={<FavoriteActorsPage />} />
-                                        <Route path="/actors/:id" element={<ActorPage />} />
-                                        <Route path="/reviews/:id" element={<MovieReviewPage />} />
-                                        <Route path="/movies/:id" element={<MoviePage />} />
                                         <Route path="/reviews/form" element={<AddMovieReviewPage />} />
                                     </Route>
                                 </Routes>

@@ -20,23 +20,18 @@ export const getMovies = (page = 1, genre = "") => {
 };
 
 
-export const getUpcomingMovies = (page = 1) => {
-    const date = new Date().toISOString().split('T')[0];
-    return fetch(
-        `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_TMDB_KEY}&include_adult=false&include_video=true&language=en-US&page=${page}&primary_release_date.gte=${date}&sort_by=popularity.desc`
-    ).then((response) => {
-        if (!response.ok) {
-            return response.json().then((error) => {
-                throw new Error(error.status_message || "Something went wrong");
-            });
-        }
-        return response.json();
-    })
-        .catch((error) => {
-            throw error;
-        });
-};
+export const getUpcomingMovies = async () => {
 
+
+    const response = await fetch(
+        `http://localhost:8080/api/movies/tmdb/upcoming`, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }
+    )
+    return response.json();
+}
 
 
 export const getMovie = (args) => {
