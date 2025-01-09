@@ -37,7 +37,7 @@ const AuthContextProvider = (props) => {
             }
         } catch (error) {
             console.error("Registration error:", error.message);
-            throw error; // Rethrow the error to handle it in the calling component
+            throw error;
         }
     };
 
