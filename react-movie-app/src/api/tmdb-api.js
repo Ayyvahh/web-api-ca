@@ -1,29 +1,30 @@
-export const getMovies = (page = 1, genre = "") => {
-    let url = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&include_adult=false&include_video=true&page=${page}`;
-
-    if (genre && genre !== "0") {
-        url += `&with_genres=${genre}`;
-    }
-
-    return fetch(url)
-        .then((response) => {
-            if (!response.ok) {
-                return response.json().then((error) => {
-                    throw new Error(error.status_message || "Something went wrong");
-                });
-            }
-            return response.json();
-        })
-        .catch((error) => {
-            throw error;
+export const getMovies = async (page = 1, genre = "") => {
+    try {
+        const url = `http://localhost:8080/api/movies?page=${page}&genre=${genre}`;
+        const response = await fetch(url, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
         });
+
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.message || "Failed to fetch movies");
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error("Error fetching movies:", error);
+        throw error;
+    }
 };
+
 
 
 export const getUpcomingMovies = async (page = 1) => {
     try {
         const response = await fetch(
-            `http://localhost:8080/api/movies/tmdb/upcoming?page=${page}`,
+            `http://localhost:8080/api/movies/upcoming?page=${page}`,
             {
                 headers: {
                     'Content-Type': 'application/json',
@@ -66,9 +67,7 @@ export const getMovie = (args) => {
 
 export const getGenres = () => {
     return fetch(
-        "https://api.themoviedb.org/3/genre/movie/list?api_key=" +
-        process.env.REACT_APP_TMDB_KEY +
-        "&language=en-US"
+        "http://localhost:8080/api/movies/genres"
     ).then( (response) => {
         if (!response.ok) {
             return response.json().then((error) => {
