@@ -20,18 +20,29 @@ export const getMovies = (page = 1, genre = "") => {
 };
 
 
-export const getUpcomingMovies = async () => {
-
-
-    const response = await fetch(
-        `http://localhost:8080/api/movies/tmdb/upcoming`, {
-            headers: {
-                'Content-Type': 'application/json',
+export const getUpcomingMovies = async (page = 1) => {
+    try {
+        const response = await fetch(
+            `http://localhost:8080/api/movies/tmdb/upcoming?page=${page}`,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
             }
+        );
+
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.message || "Failed to fetch upcoming movies");
         }
-    )
-    return response.json();
-}
+
+        return await response.json();
+    } catch (error) {
+        console.error("Error fetching upcoming movies:", error);
+        throw error;
+    }
+};
+
 
 
 export const getMovie = (args) => {

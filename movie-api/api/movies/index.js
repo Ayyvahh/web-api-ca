@@ -3,7 +3,7 @@ import asyncHandler from 'express-async-handler';
 import express from 'express';
 import {
     getUpcomingMovies
-} from '../backend-tmdb-api';
+} from '../backend-tmdb-api.js';
 
 
 
@@ -42,10 +42,17 @@ router.get('/:id', asyncHandler(async (req, res) => {
 
 
 router.get('/tmdb/upcoming', asyncHandler(async (req, res) => {
-    const upcomingMovies = await getUpcomingMovies();
-    res.status(200).json(upcomingMovies);
-}));
+    let { page = 1 } = req.query;
+    [page] = [+page];
 
+    try {
+        const movies = await getUpcomingMovies(page);
+        res.status(200).json(movies);
+    } catch (error) {
+        console.error('Error fetching upcoming movies:', error);
+        res.status(500).json({ error: 'Failed to fetch upcoming movies' });
+    }
+}));
 
 
 export default router;

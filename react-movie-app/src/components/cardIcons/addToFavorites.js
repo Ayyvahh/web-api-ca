@@ -3,14 +3,23 @@ import { MoviesContext } from "../../contexts/moviesContext";
 import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import {Avatar} from "@mui/material";
+import {AuthContext} from "../../contexts/authContext";
+import {useNavigate} from "react-router-dom";
 
 const AddToFavoritesIcon = ({ movie }) => {
     const context = useContext(MoviesContext);
+    const { isAuthenticated } = useContext(AuthContext);
+    const navigate = useNavigate();
+
 
     const isFavorite = context.favorites.find((id) => id === movie.id);
 
     const handleFavorites = (e) => {
         e.preventDefault();
+        if (!isAuthenticated) {
+            navigate("/login");
+            return;
+        }
         if (isFavorite) {
             context.removeFromFavorites(movie);
         } else {

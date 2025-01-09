@@ -9,7 +9,11 @@ import {Pagination} from "@mui/material";
 const UpcomingMoviesPage = (props) => {
     const [currPage, setCurrPage] = useState(1);
 
-    const {  data, error, isLoading, isError }  = useQuery(['upcoming'], getUpcomingMovies);
+    const { data, error, isLoading, isError } = useQuery(
+        ['upcoming', currPage],
+        () => getUpcomingMovies(currPage),
+        { keepPreviousData: true }
+    );
 
 
 
