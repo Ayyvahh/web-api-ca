@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Navigate, useLocation, Link } from "react-router-dom";
+import {Navigate, useLocation, Link, useNavigate} from "react-router-dom";
 import { AuthContext } from "../contexts/authContext";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -33,9 +33,7 @@ const LoginPage = () => {
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
     const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "info" });
-    const location = useLocation();
-
-    const { from } = location.state ? location.state.from.pathname : "/";
+    const navigate = useNavigate();
 
     const handleSnackClose = () => {
         setSnackbar({ ...snackbar, open: false });
@@ -49,6 +47,10 @@ const LoginPage = () => {
                 message: "Login successful! Redirecting...",
                 severity: "success",
             });
+            context.isAuthenticated = true;
+            setTimeout(() => {
+                navigate("/", { replace: true });
+            }, 1000);
         } catch (error) {
             setSnackbar({
                 open: true,
@@ -58,9 +60,6 @@ const LoginPage = () => {
         }
     };
 
-    if (context.isAuthenticated) {
-        return <Navigate to={from} />;
-    }
 
     return (
         <>

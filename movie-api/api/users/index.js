@@ -32,8 +32,6 @@ router.post('/', asyncHandler(async (req, res) => {
     }
 }));
 
-// ... Code as before
-
 
 // Update a user
 router.put('/:id', async (req, res) => {
@@ -49,18 +47,7 @@ router.put('/:id', async (req, res) => {
 });
 
 
-// Update a user
-router.put('/:id', async (req, res) => {
-    if (req.body._id) delete req.body._id;
-    const result = await User.updateOne({
-        _id: req.params.id,
-    }, req.body);
-    if (result.matchedCount) {
-        res.status(200).json({ code:200, msg: 'User Updated Sucessfully' });
-    } else {
-        res.status(404).json({ code: 404, msg: 'Unable to Update User' });
-    }
-});
+
 
 async function registerUser(req, res) {
     try {
@@ -119,6 +106,7 @@ async function authenticateUser(req, res) {
         res.status(401).json({ success: false, msg: 'Wrong password.' });
     }
 }
+
 
 
 

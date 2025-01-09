@@ -1,28 +1,33 @@
-import React, { useState, createContext } from "react";
+import React, {useState, createContext, useEffect} from "react";
 import { login, signup } from "../api/tmdb-api";
 
 export const AuthContext = createContext(null);
 
 const AuthContextProvider = (props) => {
     const existingToken = localStorage.getItem("token");
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [authToken, setAuthToken] = useState(existingToken);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [userName, setUserName] = useState("");
 
-    //Function to put JWT token in local storage.
-    const setToken = (data) => {
-        localStorage.setItem("token", data);
-        setAuthToken(data);
-    }
+    const setToken = (token) => {
+        localStorage.setItem("token", token);
+        setAuthToken(token);
+    };
+
+    useEffect(() => {
+        setIsAuthenticated(!!authToken);
+    }, [authToken]);
+
 
     const authenticate = async (username, password) => {
         const result = await login(username, password);
         if (result.token) {
             setToken(result.token)
-            setIsAuthenticated(true);
             setUserName(username);
         }
     };
+
+
 
     const register = async (username, password) => {
         try {
@@ -41,10 +46,14 @@ const AuthContextProvider = (props) => {
         }
     };
 
+    const signOut = () => {
+        localStorage.removeItem("token");
+        setAuthToken(null);
+        setIsAuthenticated(false);
+        setUserName("");
+    };
 
-    const signout = () => {
-        setTimeout(() => setIsAuthenticated(false), 100);
-    }
+
 
     return (
         <AuthContext.Provider
@@ -52,8 +61,8 @@ const AuthContextProvider = (props) => {
                 isAuthenticated,
                 authenticate,
                 register,
-                signout,
-                userName
+                signOut,
+                userName,
             }}
         >
             {props.children}

@@ -54,10 +54,14 @@ const StyledButton = styled(Button)({
 const SiteHeader = () => {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
-    const { isAuthenticated, userName, signout } = useContext(AuthContext);
+    const { isAuthenticated, signOut } = useContext(AuthContext);
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down("md"));
     const navigate = useNavigate();
+
+
+
+
 
     const menuOptions = [
         { label: "Home", path: "/", showWhenAuth: null },
@@ -69,8 +73,12 @@ const SiteHeader = () => {
         { label: "Favorite Actors", path: "/actors/favorites", showWhenAuth: true },
         { label: "Login", path: "/login", showWhenAuth: false },
         { label: "Sign Up", path: "/signup", showWhenAuth: false },
-        { label: "Log Out", action: signout, showWhenAuth: true },
+        { label: "Log Out", path: "/", action: () => {
+                signOut();
+                window.location.reload();
+            }, showWhenAuth: true },
     ];
+
 
     const handleMenuSelect = (option) => {
         if (option.action) {
@@ -79,6 +87,7 @@ const SiteHeader = () => {
             navigate(option.path, { replace: true });
         }
     };
+
 
     const handleMenu = (event) => {
         setAnchorEl(event.currentTarget);
