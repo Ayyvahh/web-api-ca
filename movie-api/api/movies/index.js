@@ -3,7 +3,7 @@ import asyncHandler from 'express-async-handler';
 import express from 'express';
 import {
     getUpcomingMovies
-} from '../tmdb-api';
+} from '../backend-tmdb-api';
 
 
 
