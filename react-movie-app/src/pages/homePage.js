@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import {getMovies} from "../api/tmdb-api";
 import PageTemplate from "../components/templateMovieList";
 import {useQuery} from "react-query";
@@ -9,6 +9,7 @@ import {Pagination} from "@mui/material";
 import Fab from "@mui/material/Fab";
 import Drawer from "@mui/material/Drawer";
 import FilterCard from "../components/filterMoviesCard";
+import {AuthContext} from "../contexts/authContext";
 
 const HomePage = () => {
     const [currPage, setCurrPage] = useState(1);
@@ -16,6 +17,7 @@ const HomePage = () => {
     const [nameFilter, setNameFilter] = useState("");
     const [genreFilter, setGenreFilter] = useState("0");
     const [sortFilter, setSortFilter] = useState("");
+    const context = useContext(AuthContext);
 
     const genreId = Number(genreFilter);
 
@@ -68,10 +70,15 @@ const HomePage = () => {
         else if (type === "sort") setSortFilter(value);
     };
 
+    const pageTitle = context.isAuthenticated
+        ? `Welcome back, ${context.userName}!`
+        : "Discover Movies";
+
+
     return (
         <>
             <PageTemplate
-                title="Discover Movies"
+                title={pageTitle}
                 movies={sortedMovies}
                 action={(movie) => (
                     <>

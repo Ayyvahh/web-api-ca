@@ -24,6 +24,7 @@ const AuthContextProvider = (props) => {
         if (result.token) {
             setToken(result.token)
             setUserName(username);
+
         }
     };
 
@@ -51,6 +52,7 @@ const AuthContextProvider = (props) => {
         setAuthToken(null);
         setIsAuthenticated(false);
         setUserName("");
+
     };
 
 

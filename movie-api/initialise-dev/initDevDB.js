@@ -8,8 +8,8 @@ import Movie from '../api/movies/movieModel.js';
 import FavMovie from '../api/favourites/movies/favMovieModel';
 import FavActor from '../api/favourites/actors/favActorModel';
 import MustWatchMovie from '../api/mustWatch/mustWatchModel';
-import favActors from "./favouriteActors";
-import favMovies from "./favouriteMovies";
+import favActors from "./favouriteActors.js";
+import favMovies from "./favouriteMovies.js";
 import mustWatch from "./mustWatch";
 
 async function main() {

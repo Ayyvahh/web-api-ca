@@ -5,10 +5,12 @@ import {getActor} from "../api/tmdb-api";
 import Spinner from '../components/spinner'
 import RemoveFromFavorites from "../components/cardIcons/removeFromFavoriteActors";
 import {ActorsContext} from "../contexts/actorsContext";
+import {AuthContext} from "../contexts/authContext";
 
 
 const FavoriteActorsPage = () => {
     const {favorites: actorIds} = useContext(ActorsContext);
+
 
     const favoriteActorQueries = useQueries(
         actorIds.map((actorId) => ({

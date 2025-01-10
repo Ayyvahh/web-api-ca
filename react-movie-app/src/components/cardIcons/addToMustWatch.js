@@ -11,6 +11,7 @@ const AddToMustWatch = ({ movie }) => {
     const context = useContext(MoviesContext);
     const { isAuthenticated } = useContext(AuthContext);
     const navigate = useNavigate();
+
     const isMustWatch = context.mustWatch.find((id) => id === movie.id);
 
     const handleMustWatch = (e) => {

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {Navigate, useLocation, Link, useNavigate} from "react-router-dom";
 import { AuthContext } from "../contexts/authContext";
 import Box from "@mui/material/Box";
@@ -8,6 +8,9 @@ import Typography from "@mui/material/Typography";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import { styled } from "@mui/material/styles";
+import {MoviesContext} from "../contexts/moviesContext";
+import {getFavouriteActors, getFavouriteMovies, getMustWatchMovies} from "../api/tmdb-api";
+import {ActorsContext} from "../contexts/actorsContext";
 
 const StyledCard = styled("div")({
     minHeight: "400px",
@@ -30,6 +33,8 @@ const formControl = {
 
 const LoginPage = () => {
     const context = useContext(AuthContext);
+    const movieContext = useContext(MoviesContext);
+    const actorContext = useContext(ActorsContext);
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
     const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "info" });
@@ -38,6 +43,7 @@ const LoginPage = () => {
     const handleSnackClose = () => {
         setSnackbar({ ...snackbar, open: false });
     };
+
 
     const handleLogin = async () => {
         try {
@@ -51,7 +57,31 @@ const LoginPage = () => {
             setTimeout(() => {
                 navigate("/", { replace: true });
             }, 1000);
-        } catch (error) {
+
+            // Fetch and load favorite movies (Had to implement multiple error checks to get it to work)
+            const ids = await getFavouriteMovies(userName);
+            if (ids && ids.movie_ids && Array.isArray(ids.movie_ids)) {
+                movieContext.loadMyMovies(ids.movie_ids);
+            } else {
+                console.error("Invalid favorite movies data:", ids);
+            }
+
+            // Fetch and load favorite actors (Had to implement multiple error checks to get it to work)
+            const actorIds = await getFavouriteActors(userName);
+            if (actorIds && actorIds.actor_ids && Array.isArray(actorIds.actor_ids)) {
+                actorContext.loadMyActors(actorIds.actor_ids);
+            } else {
+                console.error("Invalid favorite actors data:", actorIds);
+            }
+
+            // Fetch and load must-watch movies (Had to implement multiple error checks to get it to work)
+            const mustWatchIds = await getMustWatchMovies(userName);
+            if (mustWatchIds && mustWatchIds.movie_ids && Array.isArray(mustWatchIds.movie_ids)) {
+                movieContext.loadMyWatches(mustWatchIds.movie_ids);
+            }else {
+            console.error("Invalid must-watch movies data:", mustWatchIds);
+            }
+            } catch (error) {
             setSnackbar({
                 open: true,
                 message: error.message || "Invalid username or password.",

@@ -306,7 +306,7 @@ export const getFavouriteMovies = async (user) => {
 
 export const getMustWatchMovies = async (user) => {
     try {
-        const response = await fetch(`http://localhost:8080/api/favourites/mustwatch/${user}`, {
+        const response = await fetch(`http://localhost:8080/api/mustwatch/${user}`, {
             headers: {
                 'Authorization': window.localStorage.getItem('token')
             }

@@ -21,13 +21,18 @@ const ActorsContextProvider = (props) => {
         ))
     };
 
+    const loadMyActors = (ids) => {
+        setFavorites(ids)
+    }
+
     return (
         <ActorsContext.Provider
             value={{
                 favorites,
                 addToFavorites,
                 removeFromFavorites,
-                setFavorites
+                setFavorites,
+                loadMyActors,
 
 
             }}
