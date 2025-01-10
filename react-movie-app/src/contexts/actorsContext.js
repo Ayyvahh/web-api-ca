@@ -27,6 +27,7 @@ const ActorsContextProvider = (props) => {
                 favorites,
                 addToFavorites,
                 removeFromFavorites,
+                setFavorites
 
 
             }}

@@ -266,3 +266,102 @@ export const signup = async (username, password) => {
     return response.json();
 };
 
+export const getFavouriteActors = async (user) => {
+    try {
+        const response = await fetch(`http://localhost:8080/api/favourites/actors/${user}`, {
+            headers: {
+                'Authorization': window.localStorage.getItem('token')
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error("Failed to fetch favorite actors.");
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error("Error fetching favorite actors:", error);
+        return [];
+    }
+};
+
+export const getFavouriteMovies = async (user) => {
+    try {
+        const response = await fetch(`http://localhost:8080/api/favourites/movies/${user}`, {
+            headers: {
+                'Authorization': window.localStorage.getItem('token')
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error("Failed to fetch favorite movies.");
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error("Error fetching favorite movies:", error);
+        return [];
+    }
+};
+
+export const getMustWatchMovies = async (user) => {
+    try {
+        const response = await fetch(`http://localhost:8080/api/favourites/mustwatch/${user}`, {
+            headers: {
+                'Authorization': window.localStorage.getItem('token')
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error("Failed to fetch must-watch movies.");
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error("Error fetching must-watch movies:", error);
+        return [];
+    }
+};
+
+
+export const updateFavouriteMovies = async (user, ids) => {
+    const response = await fetch(
+        `http://localhost:8080/api/favourites/movies/${user}`,{
+            headers: {
+                'Authorization': window.localStorage.getItem('token'),
+                'Content-Type': 'application/json'
+            },
+            method: 'put',
+            body: JSON.stringify({ movie_ids: ids })
+        }
+    );
+    return response.json();
+}
+
+export const updateFavouriteActors = async (user, ids) => {
+    const response = await fetch(
+        `http://localhost:8080/api/favourites/actors/${user}`,{
+            headers: {
+                'Authorization': window.localStorage.getItem('token'),
+                'Content-Type': 'application/json'
+            },
+            method: 'put',
+            body: JSON.stringify({ actor_ids: ids })
+        }
+    );
+    return response.json();
+}
+
+export const updateMustWatchMovies = async (user, ids) => {
+    const response = await fetch(
+        `http://localhost:8080/api/favourites/mustwatch/${user}`,{
+            headers: {
+                'Authorization': window.localStorage.getItem('token'),
+                'Content-Type': 'application/json'
+            },
+            method: 'put',
+            body: JSON.stringify({ movie_ids: ids })
+        }
+    );
+    return response.json();
+}
