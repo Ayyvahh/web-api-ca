@@ -29,30 +29,29 @@ const root = {
 const chip = { margin: 0.5 };
 
 const MovieDetails = () => {
+
     const {id} = useParams();
 
-    const {data: movie, error: movieError, isLoading: isMovieLoading} = useQuery(
-        ["movie", {id}],
-        () => getMovie(id)
+    const { data: movie, movieError, isMovieLoading } = useQuery(['movie', {id: id}], getMovie);
+
+
+    const {data: cast, castError, isCastLoading} = useQuery(
+        ["cast", {id: id}],getMovieCast
     );
 
-    const {data: cast, error: castError, isLoading: isCastLoading} = useQuery(
-        ["cast", id],
-        () => getMovieCast(id)
+    const { data: recommendedMovies,  recommendedError, isRecommendedLoading } = useQuery(
+        ["recommended", {id: id}],
+        getRecommendedMovies
     );
 
-    const {data: recommendedMovies, error: recommendedError, isLoading: isRecommendedLoading} = useQuery(
-        ["recommended", id],
-        () => getRecommendedMovies(id)
-    );
-
-    if (isMovieLoading || isCastLoading || isRecommendedLoading) {
+    if (isCastLoading || isRecommendedLoading || isMovieLoading) {
         return <Spinner/>;
     }
 
-    if (movieError || castError) {
-        return <h1>Error: {movieError?.message || castError?.message || recommendedError?.message}</h1>;
+    if (castError || recommendedError || movieError) {
+        return <h1>Error: {castError?.message || recommendedError?.message || movieError?.message}</h1>;
     }
+
 
     return (
         <>
@@ -139,7 +138,7 @@ const MovieDetails = () => {
             </Typography>
 
             <Grid container item spacing={3} sx={{flex: "1 1 500px", padding: "5px"}}>
-                <ActorList actors={cast}/>
+                <ActorList actors={cast?.sort((a, b) => b.popularity - a.popularity).slice(0, 10) || []}/>
             </Grid>
 
             <Divider sx={{margin: "20px 0"}}/>
@@ -162,7 +161,7 @@ const MovieDetails = () => {
             </Typography>
 
             <Grid container item spacing={3} sx={{flex: "1 1 500px", padding: "5px"}}>
-                <ActorMoviesList movies={recommendedMovies}/>
+                <ActorMoviesList movies={recommendedMovies?.sort((a, b) => b.popularity - a.popularity).slice(0, 10) || []}/>
             </Grid>
         </>
     );

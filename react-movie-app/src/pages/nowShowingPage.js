@@ -9,7 +9,7 @@ import {Pagination} from "@mui/material";
 const NowShowingMovies = (props) => {
     const [currPage, setCurrPage] = useState(1);
 
-    const {data, error, isLoading, isError} = useQuery(['now_playing', currPage], () => getNowShowingMovies(currPage))
+    const {data, error, isLoading, isError} = useQuery(['nowShowing', currPage], () => getNowShowingMovies(currPage))
 
     if (isLoading) {
         return <Spinner/>
