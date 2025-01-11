@@ -75,7 +75,6 @@ const SiteHeader = () => {
         { label: "Sign Up", path: "/signup", showWhenAuth: false },
         { label: "Log Out", path: "/", action: () => {
                 signOut();
-                window.location.reload();
             }, showWhenAuth: true },
     ];
 

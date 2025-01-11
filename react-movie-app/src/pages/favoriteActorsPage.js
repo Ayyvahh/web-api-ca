@@ -3,7 +3,7 @@ import PageTemplate from "../components/templateActorListPage";
 import {useQueries} from "react-query";
 import {getActor} from "../api/tmdb-api";
 import Spinner from '../components/spinner'
-import RemoveFromFavorites from "../components/cardIcons/removeFromFavoriteActors";
+import RemoveFromFavoritesIcon from "../components/cardIcons/addToFavouriteActors";
 import {ActorsContext} from "../contexts/actorsContext";
 import {AuthContext} from "../contexts/authContext";
 
@@ -35,7 +35,7 @@ const FavoriteActorsPage = () => {
             action={(actor) => {
                 return (
                     <>
-                        <RemoveFromFavorites actor={actor}/>
+                        <RemoveFromFavoritesIcon actor={actor}/>
                     </>
                 );
             }}

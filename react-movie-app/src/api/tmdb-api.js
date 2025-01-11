@@ -354,7 +354,7 @@ export const updateFavouriteActors = async (user, ids) => {
 
 export const updateMustWatchMovies = async (user, ids) => {
     const response = await fetch(
-        `http://localhost:8080/api/favourites/mustwatch/${user}`,{
+        `http://localhost:8080/api/mustwatch/${user}`,{
             headers: {
                 'Authorization': window.localStorage.getItem('token'),
                 'Content-Type': 'application/json'

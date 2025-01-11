@@ -5,7 +5,7 @@ import {useQueries} from "react-query";
 import {getMovie} from "../api/tmdb-api";
 import Spinner from '../components/spinner'
 import WriteReview from "../components/cardIcons/writeReview";
-
+import MustWatchIcon from "../components/cardIcons/addToMustWatch";
 
 const MustWatchPage = () => {
     const {mustWatch: movieIds } = useContext(MoviesContext);
@@ -40,6 +40,7 @@ const MustWatchPage = () => {
                 return (
                     <>
                         <WriteReview movie={movie} />
+                        <MustWatchIcon movie={movie} />
                     </>
                 );
             }}

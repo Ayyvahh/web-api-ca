@@ -4,20 +4,40 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import {ActorsContext} from "../../contexts/actorsContext";
 import {AuthContext} from "../../contexts/authContext";
 import {useNavigate} from "react-router-dom";
+import {updateFavouriteActors} from "../../api/tmdb-api";
 
 const RemoveFromFavoritesIcon = ({actor}) => {
     const context = useContext(ActorsContext);
     const {isAuthenticated} = useContext(AuthContext);
     const {navigate} = useNavigate();
 
-    const handleRemoveFromFavorites = (e) => {
-        if (!isAuthenticated) {
+    const handleRemoveFromFavorites = async (e) => {
+        e.preventDefault();
+
+        if (isAuthenticated) {
             navigate("/login");
             return;
         }
-        e.preventDefault();
-        context.removeFromFavorites(actor);
+
+        try {
+            let updatedFavorites;
+
+            if (isFavorite) {
+
+                context.removeFromFavorites(actor);
+                updatedFavorites = context.favorites.filter(id => id !== actor.id);
+            } else {
+                addToFavorites(actor);
+                updatedFavorites = [...context.favorites, actor.id];
+            }
+
+            await updateFavouriteActors(authContext.userName, updatedFavorites);
+
+        } catch (error) {
+            console.error("Failed to update favorites:", error);
+        }
     };
+
     return (
         <IconButton
             aria-label="remove from favorites"

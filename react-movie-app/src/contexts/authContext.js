@@ -24,6 +24,7 @@ const AuthContextProvider = (props) => {
         if (result.token) {
             setToken(result.token)
             setUserName(username);
+            setIsAuthenticated(true);
 
         }
     };
@@ -52,7 +53,7 @@ const AuthContextProvider = (props) => {
         setAuthToken(null);
         setIsAuthenticated(false);
         setUserName("");
-
+        window.location.reload();
     };
 
 
@@ -64,6 +65,8 @@ const AuthContextProvider = (props) => {
                 authenticate,
                 register,
                 signOut,
+                setToken,
+                setUserName,
                 userName,
             }}
         >

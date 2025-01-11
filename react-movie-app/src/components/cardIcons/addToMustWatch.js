@@ -6,26 +6,41 @@ import {Avatar} from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import {AuthContext} from "../../contexts/authContext";
 import {useNavigate} from "react-router-dom";
+import {updateFavouriteMovies, updateMustWatchMovies} from "../../api/tmdb-api";
 
 const AddToMustWatch = ({ movie }) => {
     const context = useContext(MoviesContext);
-    const { isAuthenticated } = useContext(AuthContext);
+    const { isAuthenticated, userName } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const isMustWatch = context.mustWatch.find((id) => id === movie.id);
 
-    const handleMustWatch = (e) => {
+    const handleMustWatch = async (e) => {
         e.preventDefault();
+
         if (!isAuthenticated) {
             navigate("/login");
             return;
         }
-        if (isMustWatch) {
-            context.removeFromMustWatchList(movie);
-        } else {
-            context.addToMustWatchList(movie);
+
+        try {
+            let updatedFavorites;
+
+            if (isMustWatch) {
+
+                context.removeFromMustWatchList(movie);
+                updatedFavorites = context.mustWatch.filter(id => id !== movie.id);
+            } else {
+                context.addToMustWatchList(movie);
+                updatedFavorites = [...context.mustWatch, movie.id];
+            }
+
+            await updateMustWatchMovies(userName, updatedFavorites);
+
+        } catch (error) {
+            console.error("Failed to update favorites:", error);
         }
-    }
+    };
 
     return (
         <IconButton aria-label="add to favorites" onClick={handleMustWatch}>

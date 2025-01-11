@@ -5,26 +5,44 @@ import {ActorsContext} from "../../contexts/actorsContext";
 import {Avatar} from "@mui/material";
 import {AuthContext} from "../../contexts/authContext";
 import {useNavigate} from "react-router-dom";
+import {updateFavouriteActors} from "../../api/tmdb-api";
 
 const AddToFavoritesIcon = ({actor}) => {
 
     const {favorites, addToFavorites, removeFromFavorites} = useContext(ActorsContext);
-    const { isAuthenticated } = useContext(AuthContext);
-    const isFavorite = favorites.some((id) => id === actor.id);
+    const context = useContext(ActorsContext);
+    const authContext= useContext(AuthContext);
     const navigate = useNavigate();
 
-    const handleFavorites = (e) => {
+    const isFavorite = favorites.includes(actor.id);
+
+
+    const handleFavorites = async (e) => {
         e.preventDefault();
-        if (!isAuthenticated) {
+
+        if (!authContext.isAuthenticated) {
             navigate("/login");
             return;
         }
-        if (isFavorite) {
-            removeFromFavorites(actor);
-        } else {
-            addToFavorites(actor);
+
+        try {
+            let updatedFavorites;
+
+            if (isFavorite) {
+
+                removeFromFavorites(actor);
+                updatedFavorites = context.favorites.filter(id => id !== actor.id);
+            } else {
+                addToFavorites(actor);
+                updatedFavorites = [...context.favorites, actor.id];
+            }
+
+            await updateFavouriteActors(authContext.userName, updatedFavorites);
+
+        } catch (error) {
+            console.error("Failed to update favorites:", error);
         }
-    }
+    };
 
 
     return (

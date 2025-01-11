@@ -32,10 +32,10 @@ const formControl = {
 };
 
 const LoginPage = () => {
-    const context = useContext(AuthContext);
+    const { authenticate, setToken, isAuthenticated, setUserName } = useContext(AuthContext);
     const movieContext = useContext(MoviesContext);
     const actorContext = useContext(ActorsContext);
-    const [userName, setUserName] = useState("");
+    const [userName, setUserNameInput] = useState("");
     const [password, setPassword] = useState("");
     const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "info" });
     const navigate = useNavigate();
@@ -44,21 +44,25 @@ const LoginPage = () => {
         setSnackbar({ ...snackbar, open: false });
     };
 
+    useEffect(() => {
+        localStorage.removeItem("token");
+        setToken(null);
+        setUserName("");
+        console.log("Token cleared on login page");
+    }, []);
 
     const handleLogin = async () => {
         try {
-            await context.authenticate(userName, password);
+            await authenticate(userName, password);
             setSnackbar({
                 open: true,
                 message: "Login successful! Redirecting...",
                 severity: "success",
             });
-            context.isAuthenticated = true;
+
             setTimeout(() => {
                 navigate("/", { replace: true });
             }, 1000);
-
-            // Fetch and load favorite movies (Had to implement multiple error checks to get it to work)
             const ids = await getFavouriteMovies(userName);
             if (ids && ids.movie_ids && Array.isArray(ids.movie_ids)) {
                 movieContext.loadMyMovies(ids.movie_ids);
