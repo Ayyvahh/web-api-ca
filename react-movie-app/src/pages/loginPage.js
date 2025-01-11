@@ -57,6 +57,7 @@ const LoginPage = () => {
                     severity: "success",
                 });
 
+
                 await loadUserData(userName);
 
                 setTimeout(() => {
