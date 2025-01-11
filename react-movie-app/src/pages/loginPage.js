@@ -1,5 +1,5 @@
-import React, {useContext, useEffect, useState} from "react";
-import {Navigate, useLocation, Link, useNavigate} from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Navigate, useLocation, Link } from "react-router-dom";
 import { AuthContext } from "../contexts/authContext";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -8,9 +8,6 @@ import Typography from "@mui/material/Typography";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import { styled } from "@mui/material/styles";
-import {MoviesContext} from "../contexts/moviesContext";
-import {getFavouriteActors, getFavouriteMovies, getMustWatchMovies} from "../api/tmdb-api";
-import {ActorsContext} from "../contexts/actorsContext";
 
 const StyledCard = styled("div")({
     minHeight: "400px",
@@ -32,68 +29,61 @@ const formControl = {
 };
 
 const LoginPage = () => {
-    const { authenticate, setToken, isAuthenticated, setUserName } = useContext(AuthContext);
-    const movieContext = useContext(MoviesContext);
-    const actorContext = useContext(ActorsContext);
-    const [userName, setUserNameInput] = useState("");
+    const context = useContext(AuthContext);
+    const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
     const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "info" });
-    const navigate = useNavigate();
+    const location = useLocation();
+
 
     const handleSnackClose = () => {
         setSnackbar({ ...snackbar, open: false });
     };
 
-    useEffect(() => {
-        localStorage.removeItem("token");
-        setToken(null);
-        setUserName("");
-        console.log("Token cleared on login page");
-    }, []);
-
     const handleLogin = async () => {
+        if (!userName || !password) {
+            setSnackbar({
+                open: true,
+                message: "Username and password are required.",
+                severity: "error",
+            });
+            return;
+        }
+
         try {
-            await authenticate(userName, password);
+            const isAuthenticated = await context.authenticate(userName, password);
+
+            if (!isAuthenticated) {
+                setSnackbar({
+                    open: true,
+                    message: "Invalid username or password.",
+                    severity: "error",
+                });
+                return;
+            }
+
             setSnackbar({
                 open: true,
                 message: "Login successful! Redirecting...",
                 severity: "success",
             });
 
-            setTimeout(() => {
-                navigate("/", { replace: true });
-            }, 1000);
-            const ids = await getFavouriteMovies(userName);
-            if (ids && ids.movie_ids && Array.isArray(ids.movie_ids)) {
-                movieContext.loadMyMovies(ids.movie_ids);
-            } else {
-                console.error("Invalid favorite movies data:", ids);
-            }
-
-            // Fetch and load favorite actors (Had to implement multiple error checks to get it to work)
-            const actorIds = await getFavouriteActors(userName);
-            if (actorIds && actorIds.actor_ids && Array.isArray(actorIds.actor_ids)) {
-                actorContext.loadMyActors(actorIds.actor_ids);
-            } else {
-                console.error("Invalid favorite actors data:", actorIds);
-            }
-
-            // Fetch and load must-watch movies (Had to implement multiple error checks to get it to work)
-            const mustWatchIds = await getMustWatchMovies(userName);
-            if (mustWatchIds && mustWatchIds.movie_ids && Array.isArray(mustWatchIds.movie_ids)) {
-                movieContext.loadMyWatches(mustWatchIds.movie_ids);
-            }else {
-            console.error("Invalid must-watch movies data:", mustWatchIds);
-            }
-            } catch (error) {
+        } catch (error) {
             setSnackbar({
                 open: true,
-                message: error.message || "Invalid username or password.",
+                message: error.message || "Something went wrong. Please try again.",
                 severity: "error",
             });
         }
     };
 
+
+
+
+
+    if (context.isAuthenticated) {
+        return <Navigate to={"/"} />;
+    }
 
     return (
         <>
