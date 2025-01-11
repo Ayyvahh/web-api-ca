@@ -41,6 +41,15 @@ const SignUpPage = () => {
     };
 
     const handleRegister = async () => {
+        if (!userName || !password || !passwordAgain) {
+            setSnackbar({
+                open: true,
+                message: "Please fill in all fields.",
+                severity: "error",
+            });
+            return;
+        }
+
         if (password !== passwordAgain) {
             setSnackbar({
                 open: true,
@@ -58,7 +67,10 @@ const SignUpPage = () => {
                     message: "Signup successful! Redirecting ...",
                     severity: "success",
                 });
-                setTimeout(() => setRegistered(true), 1000);
+
+                setTimeout(() => {
+                    setRegistered(true);
+                }, 1000);
             } else {
                 setSnackbar({
                     open: true,
@@ -94,7 +106,7 @@ const SignUpPage = () => {
                 }}
             >
                 <StyledCard>
-                    <Typography variant="h4" component="h2" style={{ color: "white", marginBottom: "20px" , margin:"10px"}}>
+                    <Typography variant="h4" component="h2" style={{ color: "white", marginBottom: "20px", margin: "10px" }}>
                         Sign Up
                     </Typography>
                     <TextField

@@ -62,6 +62,7 @@ const AuthContextProvider = (props) => {
         <AuthContext.Provider
             value={{
                 isAuthenticated,
+                setIsAuthenticated,
                 authenticate,
                 register,
                 signOut,

@@ -40,12 +40,18 @@ UserSchema.pre('save', async function(next) {
 
 const passwordValidator = (password) => {
     const pwdPattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
-    return pwdPattern.test(password);
+    if (!pwdPattern.test(password)) {
+        return 'Password must be at least 8 characters long, include at least one letter, one number, and one special character.';
+    }
+    return true;
 };
 
-UserSchema.path("password").validate({
-    validator: passwordValidator,
-});
+UserSchema.path('password').validate(function (password) {
+    const validation = passwordValidator(password);
+    if (validation !== true) {
+        throw new Error(validation);
+    }
+}, 'Invalid password');
 
 
 export default mongoose.model('User', UserSchema);
